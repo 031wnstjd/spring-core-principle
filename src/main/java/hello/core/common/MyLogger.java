@@ -2,19 +2,25 @@ package hello.core.common;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
-@Scope(value = "request")
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class MyLogger {
 
+    @Autowired
+    ApplicationContext ac;
     private String uuid;
     private String requestURL;
 
     public void setRequestURL(String requestURL) {
+        System.out.println("setRequestURL = " + this);
         this.requestURL = requestURL;
     }
 
